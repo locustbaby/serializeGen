@@ -1,0 +1,56 @@
+// 省略了部分原有代码，仅展示了并发处理模板渲染的部分
+func main() {
+	// ...
+
+	// Use a channel to communicate errors
+	errorChan := make(chan error)
+
+	// Use a WaitGroup to wait for all goroutines to finish
+	var wg sync.WaitGroup
+
+	// Traverse all files in the templates directory
+	err = filepath.Walk(*templateFile, func(path string, info os.FileInfo, err error) error {
+		// Error handling
+
+		// Ignore directories
+
+		wg.Add(1)
+		go func(path string, info os.FileInfo) {
+			defer wg.Done()
+
+			templateContent, err := utils.ReadFile(path)
+			if err != nil {
+				errorChan <- err
+				return
+			}
+
+			outputContent, err := utils.RenderTemplate(string(templateContent), valuesMap)
+			if err != nil {
+				errorChan <- err
+				return
+			}
+
+			// Print to standard output
+
+			// Write to file
+			if *outputDir != "" {
+				err = utils.WriteFile(filepath.Join(*outputDir, info.Name()), outputContent)
+				if err != nil {
+					errorChan <- err
+					return
+				}
+			}
+		}(path, info)
+
+		return nil
+	})
+
+	go func() {
+		wg.Wait()
+		close(errorChan)
+	}()
+
+	for err := range errorChan {
+		// Log errors or handle them as needed
+	}
+}
