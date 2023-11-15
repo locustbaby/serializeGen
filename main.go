@@ -95,6 +95,7 @@ func main() {
 
 	if err != nil {
 		fmt.Println("Error processing templates:", err)
+		os.Exit(1)
 		return
 	}
 }
