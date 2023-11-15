@@ -31,14 +31,18 @@ func main() {
 	// Read values.yaml file
 	values, err := utils.ReadFile(*valuesFile)
 	if err != nil {
-		fmt.Println("Error reading values.yaml:", err)
+		errorMessage := fmt.Sprintf("Error reading [%s]: %v", *valuesFile, err)
+		fmt.Println(errorMessage)
+		os.Exit(1)
 		return
 	}
 
 	// Parse values.yaml file and convert its content to a Go map
 	valuesMap, err := utils.ParseYAML(values)
 	if err != nil {
-		fmt.Println("Error parsing values.yaml:", err)
+		errorMessage := fmt.Sprintf("Error parsing [%s]: %v", *valuesFile, err)
+		fmt.Println(errorMessage)
+		os.Exit(1)
 		return
 	}
 
@@ -46,7 +50,9 @@ func main() {
 	if *outputDir != "" {
 		err = utils.CreateDirectory(*outputDir)
 		if err != nil {
-			fmt.Println("Error creating output directory:", err)
+			errorMessage := fmt.Sprintf("Error parsing [%s]: %v", *outputDir, err)
+			fmt.Println(errorMessage)
+			os.Exit(1)
 			return
 		}
 	}
