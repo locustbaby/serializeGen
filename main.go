@@ -93,9 +93,6 @@ func main() {
 		return nil
 	})
 
-	if err != nil {
-		fmt.Println("Error processing templates:", err)
-		os.Exit(1)
-		return
-	}
+	HandleError(*templateFile, err, "Error processing templates")
+
 }
