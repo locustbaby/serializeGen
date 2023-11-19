@@ -4,7 +4,7 @@ email: john.doe@example.com
 
 list:
   - name: Alice
-    age: 25
+    age: 999
     city: New York
   - name: Bob
     age: 30

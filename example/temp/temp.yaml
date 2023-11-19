@@ -1,4 +1,0 @@
-templname: {{ .name }}
-tempage: {{ .age }}
-tempemail: {{ .email }}
-tempemail: {{ .xxx }}

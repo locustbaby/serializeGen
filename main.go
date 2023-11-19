@@ -2,18 +2,17 @@ package main
 
 import (
 	"flag"
-	"fmt"
 	"os"
 	"path/filepath"
 
-	"github.com/locustbaby/serializeGen/utils"
+	"github.com/locustbaby/stt/utils"
 )
 
 func main() {
 	// Define command-line flags
-	valuesFile := flag.String("values", "", "values file")
-	templateFile := flag.String("template", "", "template file or directory path")
-	outputDir := flag.String("output", "", "output directory path")
+	valuesFile := flag.String("v", "", "Values file")
+	templateFile := flag.String("t", "", "Template file or directory path")
+	outputDir := flag.String("o", "", "Output Directory path, only [Dir]")
 
 	// Parse command-line flags
 	flag.Parse()
@@ -24,25 +23,17 @@ func main() {
 		return
 	}
 
-	// Print flag values
-	fmt.Println("Template file path:", *templateFile)
-	fmt.Println("Output directory path:", *outputDir)
-
 	// Read values.yaml file
 	values, err := utils.ReadFile(*valuesFile)
 	if err != nil {
-		errorMessage := fmt.Sprintf("Error reading [%s]: %v", *valuesFile, err)
-		fmt.Println(errorMessage)
-		os.Exit(1)
+		utils.HandleError("Error reading", *valuesFile, err)
 		return
 	}
 
 	// Parse values.yaml file and convert its content to a Go map
 	valuesMap, err := utils.ParseYAML(values)
 	if err != nil {
-		errorMessage := fmt.Sprintf("Error parsing [%s]: %v", *valuesFile, err)
-		fmt.Println(errorMessage)
-		os.Exit(1)
+		utils.HandleError("Error parsing", *valuesFile, err)
 		return
 	}
 
@@ -50,9 +41,7 @@ func main() {
 	if *outputDir != "" {
 		err = utils.CreateDirectory(*outputDir)
 		if err != nil {
-			errorMessage := fmt.Sprintf("Error parsing [%s]: %v", *outputDir, err)
-			fmt.Println(errorMessage)
-			os.Exit(1)
+			utils.HandleError("Error creating", *outputDir, err)
 			return
 		}
 	}
@@ -70,22 +59,22 @@ func main() {
 		// Read the template file
 		templateContent, err := utils.ReadFile(path)
 		if err != nil {
+			utils.HandleError("Error reading template", path, err)
 			return err
 		}
 
 		// Render the template
 		outputContent, err := utils.RenderTemplate(string(templateContent), valuesMap)
 		if err != nil {
+			utils.HandleError("Error rendering template", path, err)
 			return err
 		}
-
-		// Print to standard output
-		fmt.Println(outputContent)
 
 		// Write to file
 		if *outputDir != "" {
 			err = utils.WriteFile(filepath.Join(*outputDir, info.Name()), outputContent)
 			if err != nil {
+				utils.HandleError("Error writing to", filepath.Join(*outputDir, info.Name()), err)
 				return err
 			}
 		}
@@ -93,6 +82,5 @@ func main() {
 		return nil
 	})
 
-	HandleError(*templateFile, err, "Error processing templates")
-
+	utils.HandleError("Error processing templates", *templateFile, err)
 }

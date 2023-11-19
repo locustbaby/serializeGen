@@ -1,4 +1,4 @@
-module github.com/locustbaby/serializeGen
+module github.com/locustbaby/stt
 
 go 1.21.1
 

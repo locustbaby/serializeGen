@@ -2,8 +2,8 @@ package utils
 
 import "log"
 
-func HandleError(context string, err error, message string) {
+func HandleError(message string, filename string, err error) {
 	if err != nil {
-		log.Fatalf("%s [%s]: %v", message, context, err)
+		log.Fatalf("%s [%s]: %v", message, filename, err)
 	}
 }
