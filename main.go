@@ -14,7 +14,7 @@ func main() {
 	valuesFile := flag.String("v", "", "Values file")
 	templateFile := flag.String("t", "", "Template file or directory path")
 	outputDir := flag.String("o", "", "Output Directory path, only [Dir]")
-	delimiter := flag.String("d", "{{,}}", "delimiter, like [[,]]")
+	delimiter := flag.String("d", "{{,}}", "delimiter, like \"[[,]]\"")
 
 	// Parse command-line flags
 	flag.Parse()

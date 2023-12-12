@@ -1,0 +1,13 @@
+{
+    "tasks": [
+      {
+        "taskname": "YourTaskName1",
+        "tasktype": "YourTaskType1",
+        "tasklist": [
+            {"source": "file1.txt", "valuefile": "", "outputdir": ["output1.txt"], "delimiter": "{{,}}"}
+        ]
+      }
+      // Add more tasks as needed
+    ]
+  }
+  

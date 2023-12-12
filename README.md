@@ -71,6 +71,8 @@ templatelist:
 ## option
 
 ```
+  -d string
+        delimiter, like "[[,]]" (default "{{,}}")
   -o string
         Output Directory path, only [Dir]
   -t string
