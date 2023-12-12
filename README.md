@@ -11,6 +11,12 @@ Helm is a great way to organize your application, but when dealing with multiple
 go run main.go -t example/temp -o example/output -v example/values.yaml
 ```
 
+### Different delimiter
+
+```shell
+go run main.go -t example/temp -o example/output -v example/values.yaml -d "[[,]]"
+```
+
 ### Example
 
  `-t example/temp/example_yaml.yaml`
@@ -75,12 +81,12 @@ templatelist:
 
 Todo:
 
-> Implement JSON template tool
+- [x] Implement JSON template tool
 
-> YAML <-> JSON conversion
+- [ ] YAML <-> JSON conversion
 
-> Read from JSON
+- [ ] Read from JSON
 
-> Check the validity of the value file and output file
+- [ ] Check the validity of the value file and output file
 
-> Map for template to output, also support multi-input/output
+- [ ] Map for template to output, also support multi-input/output

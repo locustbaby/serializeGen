@@ -1,3 +1,4 @@
 {
-  "templname": {{ .name }}
+  "templname": {{ .name }},
+  "diffdelimiter": [[ .name ]]
 }

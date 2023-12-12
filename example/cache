@@ -1,4 +1,5 @@
-// 省略了部分原有代码，仅展示了并发处理模板渲染的部分
+// Omitted some original code, only showing the concurrent template rendering part.
+
 func main() {
 	// ...
 
@@ -45,11 +46,13 @@ func main() {
 		return nil
 	})
 
+	// Close the error channel after all goroutines finish
 	go func() {
 		wg.Wait()
 		close(errorChan)
 	}()
 
+	// Process errors received from goroutines
 	for err := range errorChan {
 		// Log errors or handle them as needed
 	}
